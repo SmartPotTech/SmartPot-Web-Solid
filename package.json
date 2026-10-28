@@ -1,0 +1,42 @@
+{
+  "name": "smartpot-web-solid",
+  "private": true,
+  "version": "2.0.0",
+  "description": "PWA de SmartPot en SolidJS para monitorear y automatizar cultivos hidropónicos",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run",
+    "icons": "node scripts/generate-icons.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/outfit": "^5.3.0",
+    "@solidjs/router": "^0.15.3",
+    "lucide-solid": "^0.544.0",
+    "solid-js": "^1.9.9"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@resvg/resvg-js": "^2.6.2",
+    "@solidjs/testing-library": "^0.8.10",
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/node": "^24.10.0",
+    "eslint": "^9.39.5",
+    "globals": "^17.12.0",
+    "jsdom": "^30.1.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.1",
+    "vite": "^8.3.1",
+    "vite-plugin-solid": "^2.11.10",
+    "vitest": "^5.0.2"
+  },
+  "packageManager": "pnpm@11.28.0"
+}
