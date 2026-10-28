@@ -1,0 +1,29 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "deps"
+    groups:
+      solid:
+        patterns: [ "solid-js", "@solidjs/*", "vite-plugin-solid" ]
+      lint:
+        patterns: [ "eslint", "@eslint/*", "typescript-eslint", "eslint-plugin-*" ]
+      test:
+        patterns: [ "vitest", "@testing-library/*", "jsdom" ]
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "deps"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"

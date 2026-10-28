@@ -1,0 +1,24 @@
+#!/bin/sh
+# El entrypoint de nginx lo carga con «source» antes de procesar las plantillas:
+# exporta API_ORIGIN y CSP_UPGRADE para la CSP y escribe /config.js.
+
+API_URL="${API_URL:-http://localhost:8091}"
+case "$API_URL" in
+  http://*|https://*) ;;
+  *) echo "API_URL debe empezar por http:// o https://"; exit 1 ;;
+esac
+
+API_URL="${API_URL%/}"
+API_ORIGIN="$(printf '%s' "$API_URL" | sed -E 's#^(https?://[^/]+).*#\1#')"
+export API_ORIGIN
+
+# Con la API en HTTPS se piden en HTTPS los recursos mixtos; en local se omite.
+case "$API_URL" in
+  https://*) CSP_UPGRADE=" upgrade-insecure-requests" ;;
+  *) CSP_UPGRADE="" ;;
+esac
+export CSP_UPGRADE
+
+mkdir -p /tmp/smartpot
+printf 'window.SMARTPOT_CONFIG = { apiUrl: "%s" };\n' "$API_URL" > /tmp/smartpot/config.js
+echo "SmartPot Web usará la API en $API_URL"
