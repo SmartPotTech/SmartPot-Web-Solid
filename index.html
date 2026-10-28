@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+    <title>SmartPot — Monitoreo inteligente de cultivos hidropónicos</title>
+    <meta content="SmartPot monitorea tus cultivos hidropónicos en tiempo real y un asistente de IA te dice qué necesitan o actúa por ti. Gratis, instalable y de código abierto."
+          name="description"/>
+    <meta content="hidroponía, cultivos hidropónicos, huerto inteligente, IoT, ESP32, MQTT, sensores de pH, TDS, inteligencia artificial, agricultura urbana, Wokwi"
+          name="keywords"/>
+    <meta content="index, follow" name="robots"/>
+    <meta content="SmartPot Tech" name="author"/>
+    <meta content="#0B3D2B" name="theme-color"/>
+    <meta content="light" name="color-scheme"/>
+    <link href="https://smartpot.app/" rel="canonical"/>
+    <link href="https://smartpot.app/" hreflang="es" rel="alternate"/>
+
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+    <link href="/icons/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="/icons/apple-touch-icon.png" rel="apple-touch-icon"/>
+    <link href="/manifest.webmanifest" rel="manifest"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="SmartPot" name="apple-mobile-web-app-title"/>
+    <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="yes" name="mobile-web-app-capable"/>
+
+    <meta content="website" property="og:type"/>
+    <meta content="SmartPot" property="og:site_name"/>
+    <meta content="es_CO" property="og:locale"/>
+    <meta content="https://smartpot.app/" property="og:url"/>
+    <meta content="SmartPot — Tu huerto hidropónico, en tu bolsillo" property="og:title"/>
+    <meta content="Monitoreo en tiempo real, asistente de inteligencia artificial y automatización para cultivos hidropónicos."
+          property="og:description"/>
+    <meta content="https://smartpot.app/og-image.png" property="og:image"/>
+    <meta content="1200" property="og:image:width"/>
+    <meta content="630" property="og:image:height"/>
+    <meta content="SmartPot: cultivos hidropónicos inteligentes" property="og:image:alt"/>
+    <meta content="summary_large_image" name="twitter:card"/>
+    <meta content="SmartPot — Tu huerto hidropónico, en tu bolsillo" name="twitter:title"/>
+    <meta content="Monitoreo en tiempo real, asistente de IA y automatización para cultivos hidropónicos."
+          name="twitter:description"/>
+    <meta content="https://smartpot.app/og-image.png" name="twitter:image"/>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "Organization",
+                    "@id": "https://smartpot.app/#organization",
+                    "name": "SmartPot Tech",
+                    "url": "https://smartpot.app/",
+                    "logo": "https://smartpot.app/icons/icon-512.png",
+                    "sameAs": [
+                        "https://github.com/SmartPotTech"
+                    ]
+                },
+                {
+                    "@type": "WebSite",
+                    "@id": "https://smartpot.app/#website",
+                    "url": "https://smartpot.app/",
+                    "name": "SmartPot",
+                    "inLanguage": "es",
+                    "publisher": {
+                        "@id": "https://smartpot.app/#organization"
+                    }
+                },
+                {
+                    "@type": "SoftwareApplication",
+                    "name": "SmartPot",
+                    "url": "https://smartpot.app/",
+                    "applicationCategory": "LifestyleApplication",
+                    "operatingSystem": "Web, Android, iOS, Windows, macOS",
+                    "description": "Aplicación web progresiva para monitorear y automatizar cultivos hidropónicos con IoT e inteligencia artificial.",
+                    "inLanguage": "es",
+                    "isAccessibleForFree": true,
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "COP"
+                    },
+                    "publisher": {
+                        "@id": "https://smartpot.app/#organization"
+                    }
+                },
+                {
+                    "@type": "FAQPage",
+                    "mainEntity": [
+                        {
+                            "@type": "Question",
+                            "name": "¿Qué es SmartPot?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Una plataforma abierta para monitorear y automatizar cultivos hidropónicos en maceta, tubos NFT, torre o balsa: un ESP32 envía sus lecturas por MQTT, o SmartPot las simula en un cultivo virtual, y la aplicación las analiza con inteligencia artificial."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "¿Necesito hardware?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "No. Puedes crear un cultivo virtual que SmartPot simula, o uno real con el firmware simulado en Wokwi o en una placa ESP32."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "¿Qué cultivos soporta?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "Lechuga, tomate, fresa, albahaca, espinaca y pimentón, cada uno con sus rangos ideales."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "¿Cuánto cuesta?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "SmartPot es gratuito y de código abierto bajo licencia MIT."
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    </script>
+    <script src="/config.js"></script>
+</head>
+<body>
+<div id="root">
+    <!-- Contenido para rastreadores y navegadores sin JavaScript; SolidJS lo reemplaza al cargar. -->
+    <main>
+        <h1>SmartPot: monitoreo inteligente de cultivos hidropónicos</h1>
+        <p>SmartPot monitorea tus cultivos hidropónicos en tiempo real y un asistente de inteligencia artificial te dice
+            qué necesita cada planta, o actúa por ti con el modo automático.</p>
+        <ul>
+            <li>Temperatura, humedad, luz, pH, nutrientes y humedad del sustrato desde tu ESP32 por MQTT, o simuladas en
+                un cultivo virtual.
+            </li>
+            <li>Sistema experto, lógica difusa y aprendizaje automático para diagnosticar cada cultivo.</li>
+            <li>Automatización de bomba de agua, luz ultravioleta y ventilador.</li>
+            <li>Aplicación web progresiva: se instala en Android, iOS y escritorio.</li>
+        </ul>
+        <p><a href="/register">Crear cuenta gratis</a> · <a href="/login">Ingresar</a></p>
+        <noscript><p>Activa JavaScript para usar la aplicación.</p></noscript>
+    </main>
+</div>
+<script src="/src/main.tsx" type="module"></script>
+</body>
+</html>
