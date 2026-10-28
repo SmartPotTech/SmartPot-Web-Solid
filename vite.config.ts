@@ -3,7 +3,7 @@ import solidPlugin from "vite-plugin-solid";
 import {defineConfig} from "vitest/config";
 
 export default defineConfig({
-    plugins: [solidPlugin(), tailwindcss()],
+    plugins: [solidPlugin({hot: !process.env.VITEST}), tailwindcss()],
     build: {
         target: "es2022",
         sourcemap: false,
