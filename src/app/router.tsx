@@ -1,4 +1,4 @@
-import {Route, Router} from "@solidjs/router";
+import {Route, type RouteSectionProps, Router} from "@solidjs/router";
 import {AppShell} from "../components/layout/AppShell";
 import {PublicLayout} from "../components/layout/PublicLayout";
 import {LoginPage} from "../features/auth/LoginPage";
@@ -19,7 +19,7 @@ import {NotFoundPage} from "./NotFoundPage";
 export function AppRouter() {
     return (
         <Router>
-            <Route path="/app" component={(props) => <RequireAuth><AppShell>{props.children}</AppShell></RequireAuth>}>
+            <Route path="/app" component={(props: RouteSectionProps) => <RequireAuth><AppShell>{props.children}</AppShell></RequireAuth>}>
                 <Route path="/" component={LazyOverviewPage}/>
                 <Route path="/crops" component={CropsPage}/>
                 <Route path="/crops/:cropId" component={LazyCropDetailPage}/>
