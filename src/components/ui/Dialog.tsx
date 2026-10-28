@@ -23,7 +23,9 @@ export function Dialog(props: DialogProps) {
 
     return (
         <dialog
-            ref={ref}
+            ref={(el) => {
+                ref = el;
+            }}
             onClose={() => props.onClose()}
             onCancel={(event) => {
                 event.preventDefault();
