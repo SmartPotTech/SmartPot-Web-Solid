@@ -1,0 +1,179 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/outfit";
+
+/* Paleta SmartPot: verdes de hoja, agua, sol y arcilla. */
+@theme {
+    --color-leaf-950: #06281c;
+    --color-leaf-900: #0b3d2b;
+    --color-leaf-800: #0a5a3c;
+    --color-leaf-700: #067a52;
+    --color-leaf-600: #009a64;
+    --color-leaf-500: #00b074;
+    --color-leaf-300: #7fdbb0;
+    --color-leaf-100: #ddf5ea;
+    --color-leaf-50: #eefaf4;
+    --color-water-700: #1f6fa0;
+    --color-water-500: #2d9cdb;
+    --color-water-100: #e3f2fb;
+    --color-sun-600: #c98d12;
+    --color-sun-500: #f2b632;
+    --color-sun-100: #fdf4dd;
+    --color-clay-600: #b85a38;
+    --color-clay-500: #d9734e;
+    --color-clay-100: #fbe9e1;
+    --color-danger-600: #b83232;
+    --color-danger-500: #d64545;
+    --color-danger-100: #fbe4e4;
+    --color-ink: #17261f;
+    --color-muted: #5b6b63;
+    --color-line: #d5e3dc;
+    --color-surface: #f2f7f4;
+    --color-page: #f7faf8;
+
+    --font-sans: "Inter Variable", "Segoe UI", system-ui, sans-serif;
+    --font-display: "Outfit Variable", "Segoe UI", system-ui, sans-serif;
+
+    --radius-card: 1.25rem;
+    --shadow-card: 0 1px 2px rgb(11 61 43 / 0.06), 0 8px 24px rgb(11 61 43 / 0.06);
+}
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-page font-sans text-ink antialiased;
+    }
+
+    h1,
+    h2,
+    h3 {
+        @apply font-display tracking-tight;
+    }
+
+    :focus-visible {
+        @apply outline-2 outline-offset-2 outline-leaf-500;
+    }
+}
+
+@layer components {
+    .card {
+        @apply rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)];
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Escena del cultivo: agua, aire, bruma, gotas y luz en movimiento suave; quieta si se prefiere menos movimiento. */
+.crop-scene .scene-rain {
+    animation: scene-fall 1.4s linear infinite;
+}
+
+.crop-scene .scene-spin {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: scene-spin 0.8s linear infinite;
+}
+
+.crop-scene .scene-flow {
+    animation: scene-flow 0.9s linear infinite;
+}
+
+.crop-scene .scene-drop {
+    animation: scene-drop 1s ease-in infinite;
+}
+
+.crop-scene .scene-bubble {
+    animation: scene-bubble 1.6s ease-out infinite;
+}
+
+.crop-scene .scene-mist {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: scene-mist 1.8s ease-out infinite;
+}
+
+.crop-scene .scene-glow {
+    animation: scene-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes scene-fall {
+    from {
+        transform: translateY(-6px);
+        opacity: 0.2;
+    }
+    30% {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(14px);
+        opacity: 0;
+    }
+}
+
+@keyframes scene-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes scene-flow {
+    to {
+        stroke-dashoffset: -22;
+    }
+}
+
+@keyframes scene-drop {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(12px);
+        opacity: 0;
+    }
+}
+
+@keyframes scene-bubble {
+    from {
+        transform: translateY(0);
+        opacity: 0.9;
+    }
+    to {
+        transform: translateY(-38px);
+        opacity: 0;
+    }
+}
+
+@keyframes scene-mist {
+    from {
+        transform: translateY(0) scale(0.7);
+        opacity: 0.9;
+    }
+    to {
+        transform: translateY(-30px) scale(1.4);
+        opacity: 0;
+    }
+}
+
+@keyframes scene-glow {
+    50% {
+        opacity: 0.75;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .crop-scene [class^="scene-"] {
+        animation: none;
+    }
+}
