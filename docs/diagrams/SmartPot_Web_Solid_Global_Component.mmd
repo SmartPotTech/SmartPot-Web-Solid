@@ -1,0 +1,36 @@
+%%{init: {"theme": "base", "fontFamily": "Segoe UI, Arial, sans-serif", "themeVariables": {"fontFamily": "Segoe UI, Arial, sans-serif", "fontSize": "15px", "primaryColor": "#DDF5EA", "primaryTextColor": "#17261F", "primaryBorderColor": "#067A52", "secondaryColor": "#E3F2FB", "secondaryTextColor": "#17261F", "secondaryBorderColor": "#1F6FA0", "tertiaryColor": "#F2F7F4", "tertiaryTextColor": "#17261F", "tertiaryBorderColor": "#D5E3DC", "lineColor": "#5B6B63", "textColor": "#17261F", "mainBkg": "#DDF5EA", "nodeBorder": "#067A52", "clusterBkg": "#F7FAF8", "clusterBorder": "#D5E3DC", "edgeLabelBackground": "#FFFFFF", "actorBkg": "#067A52", "actorBorder": "#0B3D2B", "actorTextColor": "#FFFFFF", "actorLineColor": "#5B6B63", "signalColor": "#17261F", "signalTextColor": "#17261F", "labelBoxBkgColor": "#0B3D2B", "labelBoxBorderColor": "#0B3D2B", "labelTextColor": "#FFFFFF", "loopTextColor": "#0B3D2B", "noteBkgColor": "#FDF4DD", "noteBorderColor": "#C98D12", "noteTextColor": "#17261F", "activationBkgColor": "#DDF5EA", "activationBorderColor": "#067A52", "attributeBackgroundColorOdd": "#FFFFFF", "attributeBackgroundColorEven": "#F2F7F4"}, "layout": "elk", "elk": {"nodePlacementStrategy": "BRANDES_KOEPF", "mergeEdges": false, "cycleBreakingStrategy": "GREEDY"}}}%%
+flowchart LR
+  person(["Persona<br/>navegador o PWA instalada"])
+  subgraph imagen["Imagen smartpot-web-solid · nginx sin privilegios"]
+    direction TB
+    nginx["nginx<br/>CSP · CORP · X-Frame-Options · Permissions-Policy<br/>API_URL → /config.js y connect-src"]
+    sw["sw.js<br/>app shell y recursos con hash<br/>la API nunca en caché"]
+  end
+  subgraph app["src · SolidJS + TypeScript (sin Virtual DOM)"]
+    direction TB
+    router["app · @solidjs/router<br/>landing pública · /app protegida"]
+    auth["features/auth<br/>sesión sincronizada entre pestañas · ingreso · registro"]
+    overview["features/overview · control · actions<br/>panel general · comparativas SVG nativas · órdenes en bloque"]
+    crops["features/crops<br/>CreateCropDialog · CropHero · CropScene<br/>ReadingsChart SVG · SimulationPanel · DevicePanel"]
+    learning["features/learning · notifications · profile<br/>aprendizaje · alertas · Telegram"]
+    landing["features/landing · pwa<br/>FAQ · instalación"]
+    lib["lib<br/>api/client con ETag 304 · services · types<br/>catalog · format"]
+  end
+  api["SmartPot-API-Go<br/>/api/v1"]
+  person --> nginx --> router
+  sw -.-> router
+  router --> auth & overview & crops & learning & landing
+  auth & overview & crops & learning --> lib
+  lib -->|"fetch + Bearer JWT + If-None-Match"| api
+  classDef leaf fill:#DDF5EA,stroke:#067A52,color:#17261F
+  classDef water fill:#E3F2FB,stroke:#1F6FA0,color:#17261F
+  classDef sun fill:#FDF4DD,stroke:#C98D12,color:#17261F
+  classDef clay fill:#FBE9E1,stroke:#B85A38,color:#17261F
+  classDef core fill:#067A52,stroke:#0B3D2B,color:#FFFFFF
+  classDef deep fill:#0B3D2B,stroke:#06281C,color:#FFFFFF
+  classDef muted fill:#F2F7F4,stroke:#5B6B63,color:#17261F
+  class person,api water
+  class nginx,sw sun
+  class router core
+  class auth,overview,crops,learning,landing leaf
+  class lib muted
