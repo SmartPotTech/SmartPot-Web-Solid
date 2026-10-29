@@ -21,12 +21,22 @@ function compressDirectory(dir) {
       const ext = path.extname(entry.name);
       if (compressExtensions.has(ext)) {
         const fileContent = fs.readFileSync(fullPath);
+        // Gzip nivel 9
         const gzipped = zlib.gzipSync(fileContent, { level: 9 });
         fs.writeFileSync(`${fullPath}.gz`, gzipped);
+        // Brotli calidad 11
+        if (typeof zlib.brotliCompressSync === 'function') {
+          const brotlied = zlib.brotliCompressSync(fileContent, {
+            params: {
+              [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+            },
+          });
+          fs.writeFileSync(`${fullPath}.br`, brotlied);
+        }
       }
     }
   }
 }
 
 compressDirectory(distDir);
-console.log('Pre-compresión estática (gzip nivel 9) completada con éxito.');
+console.log('Pre-compresión estática (Gzip nivel 9 y Brotli calidad 11) completada con éxito.');
