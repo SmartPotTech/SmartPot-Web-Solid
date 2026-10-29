@@ -7,6 +7,23 @@ export default defineConfig({
     build: {
         target: "es2022",
         sourcemap: false,
+        minify: "esbuild",
+        cssMinify: true,
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes("node_modules/solid-js") || id.includes("node_modules/@solidjs")) {
+                        return "solid-core";
+                    }
+                    if (id.includes("node_modules/lucide-solid")) {
+                        return "lucide-icons";
+                    }
+                    if (id.includes("node_modules/@fontsource")) {
+                        return "fonts";
+                    }
+                },
+            },
+        },
     },
     resolve: {
         conditions: ["development", "browser"],

@@ -6,6 +6,13 @@ server {
     server_tokens off;
     charset utf-8;
 
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+
+    # Compresión pre-calculada estática (sin coste de CPU) y dinámica
+    gzip_static on;
     gzip on;
     gzip_comp_level 6;
     gzip_min_length 256;
