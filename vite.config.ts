@@ -7,7 +7,7 @@ export default defineConfig({
     build: {
         target: "es2022",
         sourcemap: false,
-        minify: "esbuild",
+        minify: true,
         cssMinify: true,
         rollupOptions: {
             output: {
