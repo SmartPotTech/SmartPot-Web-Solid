@@ -253,12 +253,12 @@ flowchart TB
 
 | Variable       | Dónde                | Uso                                                                                              |
 |----------------|----------------------|--------------------------------------------------------------------------------------------------|
-| `VITE_API_URL` | `.env` en desarrollo | URL de la API para `pnpm dev`                                                                    |
+| `VITE_API_URL` | `.env` en desarrollo | URL de la API para `bun run dev`                                                                 |
 | `API_URL`      | Contenedor           | Se escribe al arrancar en `/config.js` y en la CSP: la misma imagen sirve para cualquier entorno |
 
 ## 7. Pruebas
 
-`pnpm lint`, `pnpm typecheck`, `pnpm test` y `pnpm build`. Las 66 pruebas de Vitest y `@solidjs/testing-library` cubren
+`bun run lint`, `bun run typecheck`, `bun run test` y `bun run build`. Las 66 pruebas de Vitest y `@solidjs/testing-library` cubren
 el cliente HTTP, la revalidación condicional por `ETag` (`304 Not Modified`) y sus errores, la sesión, las validaciones,
 el ingreso, los componentes del cultivo, los switches, el asistente con pronóstico, consejo de lugar y lo aprendido, la
 comparación de modelos, Aplicaciones y avisos por cultivo, el panel general, la ilustración del cultivo (formas,
@@ -269,7 +269,8 @@ conexión con la CA y los requisitos de SEO y PWA.
 
 | Tarea               | Cómo                                                                                                    |
 |---------------------|---------------------------------------------------------------------------------------------------------|
-| Imagen              | `ghcr.io/smartpottech/smartpot-web-solid`: nginx sin privilegios, solo lectura con `tmpfs`              |
+| Imagen              | `ghcr.io/smartpottech/smartpot-web-solid`: compilada con Bun Alpine y servida con nginx sin privilegios  |
 | Entorno `demo-beta` | Sustituye a `smartpot-web` en `.github/docker/demo-beta/compose.yaml` y `compose.build.yaml`            |
-| Íconos              | `pnpm icons` regenera los PNG de la PWA desde los SVG                                                   |
+| Íconos              | `bun run icons` regenera los PNG de la PWA desde los SVG                                                |
+| Servidor Bun        | `bun run start` ejecuta el servidor nativo con balanceo `SO_REUSEPORT` y despacho Brotli/Gzip          |
 | Caché del navegador | Una versión nueva del service worker reemplaza el app shell al recargar                                 |

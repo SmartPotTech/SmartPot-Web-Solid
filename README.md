@@ -2,7 +2,7 @@
 
 ## Estado del Proyecto
 
-[![Node.js CI](https://github.com/SmartPotTech/SmartPot-Web-Solid/actions/workflows/node.js.yml/badge.svg)](https://github.com/SmartPotTech/SmartPot-Web-Solid/actions/workflows/node.js.yml)
+[![Bun CI](https://github.com/SmartPotTech/SmartPot-Web-Solid/actions/workflows/bun.yml/badge.svg)](https://github.com/SmartPotTech/SmartPot-Web-Solid/actions/workflows/bun.yml)
 [![CodeQL Advanced](https://github.com/SmartPotTech/SmartPot-Web-Solid/actions/workflows/codeql.yml/badge.svg)](https://github.com/SmartPotTech/SmartPot-Web-Solid/actions/workflows/codeql.yml)
 [![Publish Docker Images](https://github.com/SmartPotTech/SmartPot-Web-Solid/actions/workflows/packaging.yml/badge.svg)](https://github.com/SmartPotTech/SmartPot-Web-Solid/actions/workflows/packaging.yml)
 
@@ -71,7 +71,7 @@ La página de inicio es pública e indexable; la aplicación vive bajo `/app` y 
 ## Tecnologías
 
 SolidJS 1.9 · `@solidjs/router` · TypeScript 6 · Vite 8 · Tailwind CSS 4 · `lucide-solid` · Vitest ·
-`@solidjs/testing-library` · pnpm 11.
+`@solidjs/testing-library` · Bun 1.4.
 
 ## Estructura del Proyecto
 
@@ -101,10 +101,15 @@ SmartPot-Web-Solid/
 │   │   └── pwa/                # Registro del service worker e instalación
 │   ├── hooks/                  # Metadatos por página, recursos con refresco por visibilidad y estado de red
 │   ├── lib/                    # Cliente de la API con caché ETag, tipos, catálogos y formato en español
-│   └── styles/index.css        # Paleta SmartPot como tokens de Tailwind
-├── nginx/                      # Servidor de la imagen: CSP, CORP, caché y configuración en tiempo de ejecución
-├── scripts/generate-icons.mjs  # PNG de la PWA a partir de los SVG
-└── Dockerfile
+│   ├── styles/index.css        # Paleta SmartPot como tokens de Tailwind
+│   └── workers/                # Web Workers para cómputo intensivo de telemetría fuera del hilo principal
+├── nginx/                      # Servidor de producción en contenedor: CSP, CORP, caché y configuración
+├── scripts/
+│   ├── compress-assets.mjs     # Pre-compresión estática de activos (Gzip nivel 9 y Brotli calidad 11)
+│   └── generate-icons.mjs      # PNG de la PWA a partir de los SVG
+├── server.ts                   # Servidor Bun nativo de alto rendimiento (balanceo SO_REUSEPORT, proxy y spa)
+├── bun.lock                    # Árbol de dependencias determinista y versionable de Bun
+└── Dockerfile                  # Compilación multi-stage con Bun Alpine y servicio Nginx unprivileged
 ```
 
 ## Identidad Visual
@@ -150,7 +155,7 @@ la comparación, y los gráficos van acompañados de leyenda y de la tabla de ú
 
 ### Requisitos Previos
 
-- Node.js 22 o 24 y pnpm 11 (`corepack enable`)
+- Bun 1.2+ o 1.4+ instalado en el entorno (`curl -fsSL https://bun.sh/install | bash` o `powershell -c "irm bun.sh/install.ps1 | iex"`)
 - La API de SmartPot en `http://localhost:8091` (el entorno completo está
   en [SmartPotTech/.github](https://github.com/SmartPotTech/.github))
 
@@ -159,17 +164,26 @@ la comparación, y los gráficos van acompañados de leyenda y de la tabla de ú
 ```bash
 git clone https://github.com/SmartPotTech/SmartPot-Web-Solid.git
 cd SmartPot-Web-Solid
-pnpm install
-pnpm dev
+bun install
+bun run dev
+```
+
+### Servidor Local con Bun
+
+Para levantar el servidor de alto rendimiento con Bun (despacho pre-comprimido, proxy reverso y cabeceras de seguridad):
+
+```bash
+bun run build
+bun run start
 ```
 
 ### Calidad
 
 ```bash
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm build
+bun run lint
+bun run typecheck
+bun run test
+bun run build
 ```
 
 Las 66 pruebas de Vitest y `@solidjs/testing-library` cubren el cliente HTTP, la revalidación condicional por `ETag`
@@ -194,7 +208,7 @@ publicada: `ghcr.io/smartpottech/smartpot-web-solid:latest`.
 Tras cambiar los SVG de `public/icons` o `public/og-image.svg`:
 
 ```bash
-pnpm icons
+bun run icons
 ```
 
 ## Documentación
