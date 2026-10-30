@@ -1,21 +1,17 @@
-FROM node:24-alpine AS build
-
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-
-RUN corepack enable
+FROM oven/bun:1-alpine AS build
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
 COPY . .
-RUN pnpm build
+RUN bun run build
 
 FROM nginxinc/nginx-unprivileged:1.31.7-alpine
 
 LABEL org.opencontainers.image.title="SmartPot Web Solid" \
-      org.opencontainers.image.description="PWA de SmartPot en SolidJS servida con nginx sin privilegios" \
+      org.opencontainers.image.description="PWA de SmartPot en SolidJS compilada con Bun y servida con nginx sin privilegios" \
       org.opencontainers.image.source="https://github.com/SmartPotTech/SmartPot-Web-Solid" \
       org.opencontainers.image.licenses="MIT"
 

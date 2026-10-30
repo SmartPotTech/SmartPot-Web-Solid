@@ -13,7 +13,8 @@
       "vite/client",
       "vitest/globals",
       "@testing-library/jest-dom",
-      "node"
+      "node",
+      "bun"
     ],
     "skipLibCheck": true,
     "moduleResolution": "bundler",

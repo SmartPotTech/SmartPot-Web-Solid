@@ -1,3 +1,0 @@
-allowBuilds:
-  "@resvg/resvg-js": true
-  esbuild: true

@@ -7,7 +7,8 @@
     ],
     "module": "ESNext",
     "types": [
-      "node"
+      "node",
+      "bun"
     ],
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -18,6 +19,7 @@
     "strict": true
   },
   "include": [
-    "vite.config.ts"
+    "vite.config.ts",
+    "server.ts"
   ]
 }
