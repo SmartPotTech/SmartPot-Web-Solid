@@ -89,6 +89,7 @@ export const readingApi = {
     exportCsv: (cropId: string, from: Date) =>
         request<string>(`${V1}/crops/${cropId}/readings/export?from=${encodeURIComponent(from.toISOString())}`,
             {accept: "text"}),
+    streamUrl: (cropId: string) => `${V1}/crops/${cropId}/stream`,
 };
 
 export const actuatorApi = {

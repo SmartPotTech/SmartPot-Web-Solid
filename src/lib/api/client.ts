@@ -33,6 +33,10 @@ export function configureApi(next: ApiHooks) {
     etagCache.clear();
 }
 
+export function getApiToken(): string | null {
+    return hooks.getToken();
+}
+
 export function clearApiCache() {
     etagCache.clear();
 }
