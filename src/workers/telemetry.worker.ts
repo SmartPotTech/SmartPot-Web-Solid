@@ -39,10 +39,91 @@ export interface TelemetryStats {
     trend: "STABLE" | "WARMING" | "COOLING" | "DRYING";
 }
 
-self.onmessage = (event: MessageEvent<{ action: "CALCULATE_STATS"; readings: TelemetryReading[] }>) => {
-    const { action, readings } = event.data;
+export interface LTTBPoint {
+    x: number;
+    y: number;
+}
 
-    if (action === "CALCULATE_STATS") {
+export function downsampleLTTB(data: LTTBPoint[], threshold: number): LTTBPoint[] {
+    if (threshold >= data.length || threshold <= 2) {
+        return data;
+    }
+
+    const sampled: LTTBPoint[] = [];
+    let sampledIndex = 0;
+
+    const every = (data.length - 2) / (threshold - 2);
+
+    let a = 0;
+    let maxAreaPoint: LTTBPoint = data[a]!;
+    let nextA = 0;
+
+    sampled[sampledIndex++] = data[a]!;
+
+    for (let i = 0; i < threshold - 2; i++) {
+        let avgX = 0;
+        let avgY = 0;
+        let avgRangeStart = Math.floor((i + 1) * every) + 1;
+        let avgRangeEnd = Math.floor((i + 2) * every) + 1;
+        avgRangeEnd = avgRangeEnd < data.length ? avgRangeEnd : data.length;
+
+        const avgRangeLength = avgRangeEnd - avgRangeStart;
+
+        for (; avgRangeStart < avgRangeEnd; avgRangeStart++) {
+            avgX += data[avgRangeStart]!.x;
+            avgY += data[avgRangeStart]!.y;
+        }
+        avgX /= avgRangeLength;
+        avgY /= avgRangeLength;
+
+        let rangeOffs = Math.floor(i * every) + 1;
+        const rangeTo = Math.floor((i + 1) * every) + 1;
+
+        const pointAX = data[a]!.x;
+        const pointAY = data[a]!.y;
+
+        let maxArea = -1;
+
+        for (; rangeOffs < rangeTo; rangeOffs++) {
+            const area = Math.abs(
+                (pointAX - avgX) * (data[rangeOffs]!.y - pointAY) -
+                (pointAX - data[rangeOffs]!.x) * (avgY - pointAY)
+            ) * 0.5;
+
+            if (area > maxArea) {
+                maxArea = area;
+                maxAreaPoint = data[rangeOffs]!;
+                nextA = rangeOffs;
+            }
+        }
+
+        sampled[sampledIndex++] = maxAreaPoint;
+        a = nextA;
+    }
+
+    sampled[sampledIndex++] = data[data.length - 1]!;
+    return sampled;
+}
+
+export type WorkerMessage =
+    | { action: "CALCULATE_STATS"; readings: TelemetryReading[] }
+    | { action: "DOWNSAMPLE_LTTB"; points: LTTBPoint[]; threshold: number };
+
+self.onmessage = (event: MessageEvent<WorkerMessage>) => {
+    const data = event.data;
+
+    if (data.action === "DOWNSAMPLE_LTTB") {
+        const sampled = downsampleLTTB(data.points, data.threshold);
+        self.postMessage({
+            success: true,
+            action: "DOWNSAMPLE_LTTB",
+            sampled,
+        });
+        return;
+    }
+
+    if (data.action === "CALCULATE_STATS") {
+        const readings = data.readings;
         if (!readings || readings.length === 0) {
             self.postMessage({
                 success: true,
