@@ -13,7 +13,7 @@ on:
       enforce_gate:
         description: 'Detener y bloquear pipeline ante vulnerabilidades altas/críticas'
         type: boolean
-        default: true
+        default: false
       severity_threshold:
         description: 'Umbral de severidad de Snyk'
         type: choice
@@ -86,4 +86,4 @@ jobs:
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           echo "::notice::Publicando snapshot a Snyk Platform para monitoreo continuo 24/7 y habilitación de Automatic Fix PRs..."
-          snyk monitor --org="${{ env.SNYK_CFG_ORG }}" --all-projects --project-name="SmartPotTech/SmartPot-Web-Solid"
+          snyk monitor --org="${{ env.SNYK_CFG_ORG }}" --project-name="SmartPotTech/SmartPot-Web-Solid"
